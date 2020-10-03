@@ -1,0 +1,132 @@
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta name="viewport" content="width=320; user-scalable=no" />
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Auth Demo</title>
+	<link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.0rc2.css" type="text/css" charset="utf-8" />
+	<script type="text/javascript" src="js/jquery-1.7.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/phonegap-1.2.0.js"></script>
+	<script src="jquery.mobile/jquery.mobile-1.0rc2.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/main.js"></script>
+</head>
+
+<body onload="init()">
+	
+<div id="loginPage" data-role="page">
+
+	<div data-role="header">
+		<h1>Auth Demo</h1>
+	</div>
+
+	<div data-role="content">	
+
+		<form id="loginForm">
+		<div data-role="fieldcontain" class="ui-hide-label">
+			<label for="username">First Name:</label>
+			<input type="text" name="username" id="username" value="" placeholder="Username" />
+		</div>
+
+		<div data-role="fieldcontain" class="ui-hide-label">
+			<label for="password">First Name:</label>
+			<input type="password" name="password" id="password" value="" placeholder="Password" />
+		</div>
+        
+        <div data-role="fieldcontain" class="ui-hide-label">
+			<label for="password">Email Address:</label>
+			<input type="password" name="password" id="password" value="" placeholder="Password" />
+		</div>
+		<div data-role="fieldcontain" class="ui-hide-label">
+			<label for="password">Password:</label>
+			<input type="password" name="password" id="password" value="" placeholder="Password" />
+		</div>
+
+		<input type="submit" value="Login" id="submitButton">
+		</form>
+		
+	</div>
+
+	<div data-role="footer">
+		<h4>© Camden Enterprises</h4>
+	</div>
+
+</div>
+
+</body>
+<script>
+         
+    $(document).ready(function () {
+
+   CheckInternetConnectivity();
+   
+  });
+  
+
+var CheckInternetConnectivity=function()
+{
+if(!navigator.onLine)
+{
+   alert(text_check_internet);
+}
+}
+
+$("#registerButton").on('click', function(){
+    
+});
+
+$("#submitButton").on('click', function(){
+var userid=$("#usr").val();
+var password=$("#pwd").val();
+ 
+if(userid=="")
+{
+   alert("Please enter user id");
+   return false;
+} else if(password=="") {
+   alert("Please enter password");
+   return false;
+} 
+var isSuccess;
+if(!navigator.onLine)
+{
+   alert(text_check_internet);
+   return false;
+}
+try {
+   $.ajax({
+       beforeSend: function () {
+         // $('#loadingController').show();
+       }, 
+       type: 'POST',
+       data: {
+               
+       },
+       url: SignupUrl,
+       async: false,
+       crossOrigin: true,
+       crossDomain: true,
+       success: function (data) {
+           data = JSON.parse(data);
+           if (data.success) {
+               isSuccess = true;
+               localStorage.login = "true";
+              location.replace("LoginPage.html");
+           }  
+       },
+       complete: function () {
+        // $('#loadingController').hide();
+       },
+       error: function () {
+           isSuccess = false;
+       }
+   });
+} catch (e)
+{
+   console.log(e.message);
+}
+}); 
+   
+</script>
+</html>
